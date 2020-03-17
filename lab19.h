@@ -64,12 +64,46 @@ void Unit::newTurn(){
 }
 
 //Write Function Member attack(), beAttacked(), heal(), guard() and isDead() here
-//
-//
-//
-//
-//
-//
+int Unit::attack(Unit &target){
+	return target.beAttacked(atk);
+} 
+int Unit:: beAttacked(int oppatk){
+	int dmg = oppatk-def;
+	if(guard_on == true){
+		if(dmg<0) dmg = 0;
+		hp = hp-dmg/3;
+		return dmg/3;
+		}else{
+			if(dmg<0) dmg = 0;
+			hp = hp-dmg;
+			return dmg;
+		}
+	
+	
+}
+int Unit:: heal(){
+	int y=(rand()%20)+10;
+	if(hp==hpmax){
+		y=0;
+		return y;
+	}
+	if(hp+y>=hpmax) {
+		int i=hpmax-hp;
+		hp=hpmax;
+		return i;
+	}else{
+		hp=hp+y;
+		return y;
+	}
+
+}
+void Unit :: guard(){
+	guard_on = true;
+}
+bool Unit :: isDead(){
+	if(hp>0) return false;
+	else return true;
+}
 
 void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";
@@ -79,29 +113,29 @@ void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";	
 	}	
 	cout << "                                *               *      \n";
-	cout << "                                **  *********  **      \n";
-	cout << "                                ****         ****      \n";
+	cout << "                                *  ********  **      \n";
+	cout << "                                **         **      \n";
 	if(m_action == 'A'){
-	cout << "                 " << setw(5) << -m << "           *** **   ** ***       Attack!\n";
+	cout << "                 " << setw(5) << -m << "           * *   * *       Attack!\n";
 	}else if(m_action == 'G'){
-	cout << "                                 *** **   ** ***       Guard!\n";
+	cout << "                                 * *   * *       Guard!\n";
 	}else{
-	cout << "                                 *** **   ** ***       \n";	
+	cout << "                                 * *   * *       \n";	
 	}
-	cout << "                                  ** **   ** **        \n";
-	cout << "                   ***             *         *         \n";
+	cout << "                                  * *   * *        \n";
+	cout << "                   *             *         *         \n";
 	if(p_action == 'A'){
-	cout << "        Attack!    ***  *           *********          \n";		
+	cout << "        Attack!    *  *           *******          \n";		
 	}else if(p_action == 'H'){
-	cout << "      Heal! +" << setw(2) << p << "    ***  *           *********          \n";
+	cout << "      Heal! +" << setw(2) << p << "    *  *           *******          \n";
 	}else if(p_action == 'G'){
-	cout << "         Guard!    ***  *           *********          \n";
+	cout << "         Guard!    *  *           *******          \n";
 	}else{
-	cout << "                   ***  *           *********          \n";	
+	cout << "                   *  *           *******          \n";	
 	}
-	cout << "                    *  *       ***  *  *  *            \n";
-	cout << "                  *****           **   *   *           \n";
-	cout << "                    *                  *    ***        \n";
+	cout << "                    *  *       *  *  *  *            \n";
+	cout << "                  ***           **   *   *           \n";
+	cout << "                    *                  *    *        \n";
 	cout << "                   * *               **        *       \n";
 	cout << "                  *   *                                \n";
 	cout << "                                                       \n";
@@ -124,4 +158,3 @@ void playerLose(){
 	cout << "*                                                     *\n";
 	cout << "*******************************************************\n";
 };
-
